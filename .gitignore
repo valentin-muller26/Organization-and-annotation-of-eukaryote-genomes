@@ -1,0 +1,40 @@
+# Folder result and log
+results/
+log/
+
+# Slurm log file
+*.out
+*.err
+
+# temp fil
+*.tmp
+*.temp
+*~
+
+# save files
+*.bak
+*.backup
+
+# large file
+*.fa
+*.fasta
+*.fna
+*.fastq
+*.fq
+*.bam
+*.sam
+*.vcf
+*.gff
+*.gff3
+*.gtf
+*.bed
+
+# compressed files
+*.gz
+*.zip
+*.tar
+*.bz2
+
+# hidden system folder
+.DS_Store
+Thumbs.db
