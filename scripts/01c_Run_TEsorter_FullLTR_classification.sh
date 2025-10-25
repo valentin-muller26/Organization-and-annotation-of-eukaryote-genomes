@@ -8,7 +8,7 @@
 #SBATCH --partition=pibu_el8
 
 # ============================================================================
-# STEP 2: CLASSIFY LTR-RTs WITH TESORTER
+# USING TE SORTER to generate the clade classification for the full lenght LTR-RTs
 # ============================================================================
 
 # Directories

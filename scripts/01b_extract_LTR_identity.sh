@@ -16,7 +16,7 @@ WORKDIR="/data/users/${USER}/organization_annotation_course"
 EDTA_DIR="$WORKDIR/results/EDTA_annotation"
 OUTDIR="$WORKDIR/results/LTR_analysis"
 
-# Input file
+# GFF3 Input file
 GFF3_FILE="$EDTA_DIR/HiFiasm_Lu1_primary.fa.mod.EDTA.raw/LTR/HiFiasm_Lu1_primary.fa.mod.LTR.intact.raw.gff3"
 
 # Create output directory

@@ -12,6 +12,7 @@ WORKDIR="/data/users/${USER}/organization_annotation_course/results/EDTA_annotat
 GENOME="HiFiasm_Lu1_primary.fa"
 TELIB="${WORKDIR}/${GENOME}.mod.EDTA.TElib.fa"
 
+#Load the module for SeqKit 
 module load SeqKit/2.6.1
 
 cd "$WORKDIR"
