@@ -102,6 +102,36 @@ The script generates two visualization files:
 - `TE_landscape_distance.pdf`: TE landscape showing divergence from consensus sequences
 - `TE_landscape_age.pdf`: TE landscape showing estimated insertion age in million years
 
+## 5. Gene Annotation with MAKER
+The goal of this step is to generate gene annotations using MAKER by performing evidence-based gene prediction that integrates transcriptomic evidence, protein homology, and ab initio predictions.
+
+### 5.a Generate and configure MAKER control files `05a_maker_setup.sh`
+
+This script generates the four control files required by MAKER and automatically configures the main parameters in `maker_opts.ctl`.
+
+The control files generated are:
+- `maker_opts.ctl`: Main configuration file with all annotation parameters
+- `maker_bopts.ctl`: BLAST and filtering options
+- `maker_evm.ctl`: Evidence modeler weights
+- `maker_exe.ctl`: Paths to external executables
+
+**Parameters modified in maker_opts.ctl:**
+- `genome`: HiFiasm_Lu1_primary.fa
+- `est`: Trinity transcriptome assembly from Sha accession
+- `protein`: TAIR10 representative gene models and UniProt plant reviewed proteins
+- `model_org`: disabled (empty value to save computational time)
+- `rmlib`: HiFiasm_Lu1_primary.fa.mod.EDTA.TElib.fa (TE library from EDTA)
+- `repeat_protein`: PTREP20 database
+- `augustus_species`: arabidopsis
+- `est2genome`: 1 (enabled)
+- `protein2genome`: 1 (enabled)
+- `cpus`: 1 (MPI handles parallelization)
+- `alt_splice`: 1 (enabled)
+- `TMP`: Path for temporary files storage
+
+### 5.b Run MAKER with MPI `05b_run_maker.sh`
+The annotation is performed using MAKER version 3.01.03 with MPI for parallel processing and requires the modules OpenMPI version 4.1.1 and AUGUSTUS version 3.4.0. The annotation combines evidence from transcriptomic and protein alignments, repeat masking using the EDTA TE library, and predictions using Augustus.
+
 ## List of the tools used
 
 | Tool | Version | 
@@ -115,6 +145,7 @@ The script generates two visualization files:
 | MAKER | 3.01.03 | 
 | OpenMPI | 4.1.1 |
 | BioPerl | 1.7.8 |
+|AUGUSTUS| 3.4.0|
 | R | 4.5.0 |
 
 
