@@ -38,9 +38,11 @@ busco -i "$INPUTDIR/$PROTEINFILE" \
       -m proteins \
       -c 4
 
+
 # Run BUSCO on transcripts
 busco -i "$INPUTDIR/$TRANSCRIPTFILE" \
       -l brassicales_odb10 \
       -o busco_transcript \
       -m transcriptome \
       -c 4
+
