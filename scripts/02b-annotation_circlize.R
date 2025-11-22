@@ -312,21 +312,3 @@ ggsave(file.path(plot_dir, "07-Copia_Gypsy_Complete_Incomplete.pdf"),
        p_separated_stacked, width = 16, height = 7)
 
 cat("Complete vs Incomplete plot saved to:", file.path(plot_dir, "07-Copia_Gypsy_Complete_Incomplete.pdf"), "\n")
-
-# ============================================================================
-# SUMMARY
-# ============================================================================
-
-cat("\n", rep("=", 60), "\n")
-cat("ANALYSIS COMPLETE\n")
-cat(rep("=", 60), "\n\n")
-
-cat("Generated plots:\n")
-cat("  - 02-TE_density.pdf (Circos: Gypsy & Copia density)\n")
-cat("  - 02-TE_density_all_superfamilies.pdf (Circos: Top 6 superfamilies)\n")
-cat("  - 03-Athila_and_CRM.pdf (Circos: Centromeric clades)\n")
-cat("  - 06-Copia_Gypsy_clades_abundance.pdf (Barplot: Clade abundance)\n")
-cat("  - 07-Copia_Gypsy_Complete_Incomplete.pdf (Barplot: Complete vs Incomplete)\n")
-
-cat("\nTotal Copia clades:", nrow(copia_summary), "\n")
-cat("Total Gypsy clades:", nrow(gypsy_summary), "\n")
