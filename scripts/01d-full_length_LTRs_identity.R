@@ -11,8 +11,9 @@ library(cowplot)
 #-------------------------------------------------
 # Input files (edit paths if needed)
 #-------------------------------------------------
-gff_file <- "genomic.fna.mod.LTR.intact.raw.gff3"
-cls_file <- "genomic.fna.mod.LTR.raw.fa.rexdb-plant.cls.tsv"
+gff_file <- "HiFiasm_Lu1_primary.fa.mod.EDTA.intact.raw.gff3"
+cls_file <- "HiFiasm_Lu1_primary.fa.mod.LTR.raw.fa.rexdb-plant.cls.tsv"
+
 # cls_file is the output from TEsorter on the raw LTR-RT fasta file
 #-------------------------------------------------
 # Read and preprocess input data
@@ -114,3 +115,63 @@ combined <- plot_grid(p_copia, p_gypsy, ncol = 2, rel_widths = c(1, 1))
 
 ggsave("plots/01_LTR_Copia_Gypsy_cladelevel.png", combined, width = 12, height = 10, dpi = 300)
 ggsave("plots/01_LTR_Copia_Gypsy_cladelevel.pdf", combined, width = 12, height = 10)
+
+
+#-------------------------------------------------
+# Barplot: Number of full-length LTR-RTs per clade
+#-------------------------------------------------
+
+# Count the number of elements per Superfamily and Clade
+count_data <- anno_cls %>%
+  filter(Superfamily %in% c("Copia", "Gypsy"), !is.na(Clade)) %>%
+  group_by(Superfamily, Clade) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  arrange(Superfamily, desc(count))
+
+# Create the barplot
+p_barplot <- ggplot(count_data, aes(x = reorder(Clade, -count), y = count, fill = Superfamily)) +
+  geom_bar(stat = "identity", color = "black", width = 0.7) +
+  # Add numbers above bars
+  geom_text(aes(label = count), vjust = -0.5, size = 3.5, fontface = "bold") +
+  # Colors for Copia and Gypsy
+  scale_fill_manual(values = c("Copia" = "#1b9e77", "Gypsy" = "#d95f02")) +
+  # Separate Copia and Gypsy
+  facet_wrap(~Superfamily, scales = "free_x", ncol = 2) +
+  theme_cowplot() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    strip.background = element_rect(fill = "#f0f0f0"),
+    strip.text = element_text(face = "bold", size = 12),
+    legend.position = "none",
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14)
+  ) +
+  labs(
+    title = "Number of Full-Length LTR-RTs per Clade",
+    x = "Clade",
+    y = "Count"
+  ) +
+  # Add space above bars for labels
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))
+
+# Save plots
+ggsave("plots/02_LTR_count_per_clade_barplot.png", p_barplot, 
+       width = 12, height = 6, dpi = 300)
+ggsave("plots/02_LTR_count_per_clade_barplot.pdf", p_barplot, 
+       width = 12, height = 6)
+
+# Display count table
+message("\n=== Number of full-length LTR-RTs per clade ===")
+print(count_data)
+
+# Additional statistics
+message("\n=== Summary statistics ===")
+count_data %>%
+  group_by(Superfamily) %>%
+  summarise(
+    Total = sum(count),
+    Mean_per_clade = mean(count),
+    SD = sd(count),
+    Min = min(count),
+    Max = max(count)
+  ) %>%
+  print()

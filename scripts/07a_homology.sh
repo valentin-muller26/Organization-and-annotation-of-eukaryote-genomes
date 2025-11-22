@@ -78,13 +78,3 @@ blastp -query $ANNODIR/$FASTAPROTEINFILE \
 # Sort to keep only the best hit per query sequence
 echo "Sorting TAIR10 BLAST results..."
 sort -k1,1 -k12,12gr $BLASTP_TAIR10 | sort -u -k1,1 --merge > ${BLASTP_TAIR10}.besthits
-
-################################################################################
-# Summary statistics
-################################################################################
-echo "=== Summary Statistics ==="
-echo "Total proteins annotated: $(grep -c '^>' $ANNODIR/$FASTAPROTEINFILE)"
-echo "UniProt hits: $(wc -l < ${BLASTP_UNIPROT}.besthits)"
-echo "TAIR10 hits: $(wc -l < ${BLASTP_TAIR10}.besthits)"
-
-echo "Homology analysis complete!"

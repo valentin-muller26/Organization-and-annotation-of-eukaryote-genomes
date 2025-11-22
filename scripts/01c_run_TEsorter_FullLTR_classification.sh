@@ -7,20 +7,19 @@
 #SBATCH --error=/data/users/vmuller/organization_annotation_course/log/TEsorter_%J.err
 #SBATCH --partition=pibu_el8
 
-# ============================================================================
-# USING TE SORTER to generate the clade classification for the full lenght LTR-RTs
-# ============================================================================
 
-# Directories
+
+#Setting the constant for the directories and required files
 WORKDIR="/data/users/${USER}/organization_annotation_course"
 EDTA_DIR="$WORKDIR/results/EDTA_annotation"
 OUTDIR="$WORKDIR/results/LTR_analysis"
-
-# Container
 TESORTER_CONTAINER="/data/courses/assembly-annotation-course/CDS_annotation/containers/TEsorter_1.3.0.sif"
 
 # Input file
 LTR_FASTA="$EDTA_DIR/HiFiasm_Lu1_primary.fa.mod.EDTA.raw/LTR/HiFiasm_Lu1_primary.fa.mod.LTR.raw.fa"
+
+#Create the directory for the error and output file if not present
+mkdir -p "$LOGDIR"
 
 # Create output directory
 mkdir -p "$OUTDIR"

@@ -22,11 +22,6 @@ module load SAMtools/1.13-GCC-10.3.0
 protein="HiFiasm_Lu1_primary.all.maker.proteins.fasta.renamed.filtered.fasta"
 transcript="HiFiasm_Lu1_primary.all.maker.transcripts.fasta.renamed.filtered.fasta"
 
-echo "========================================"
-echo "Input files:"
-echo "  Protein: $protein"
-echo "  Transcript: $transcript"
-echo "========================================"
 
 # Check if input files exist
 if [ ! -f "$protein" ]; then
@@ -40,8 +35,7 @@ if [ ! -f "$transcript" ]; then
 fi
 
 # Extract Longest Protein Isoforms using samtools
-echo ""
-echo "Extracting longest protein isoforms with samtools..."
+
 
 # Step 1: Index the fasta file
 samtools faidx "$protein"
@@ -94,24 +88,6 @@ END {
 # Step 3: Extract sequences using samtools
 samtools faidx "$transcript" $(cat transcript_longest_ids.txt | tr '\n' ' ') > HiFiasm_Lu1_primary.all.maker.transcripts.renamed.filtered.longest2.fasta
 
-# Verify counts and file sizes
-echo ""
-echo "========================================"
-echo "Results:"
-echo "========================================"
-echo "Original protein sequences:    $(grep -c '^>' $protein)"
-echo "Longest protein isoforms:      $(grep -c '^>' HiFiasm_Lu1_primary.all.maker.proteins.renamed.filtered.longest2.fasta)"
-echo "Protein output size:           $(du -h HiFiasm_Lu1_primary.all.maker.proteins.renamed.filtered.longest2.fasta | cut -f1)"
-echo ""
-echo "Original transcript sequences: $(grep -c '^>' $transcript)"
-echo "Longest transcript isoforms:   $(grep -c '^>' HiFiasm_Lu1_primary.all.maker.transcripts.renamed.filtered.longest2.fasta)"
-echo "Transcript output size:        $(du -h HiFiasm_Lu1_primary.all.maker.transcripts.renamed.filtered.longest2.fasta | cut -f1)"
-echo ""
-echo "Files created:"
-echo "  - HiFiasm_Lu1_primary.all.maker.proteins.renamed.filtered.longest2.fasta"
-echo "  - HiFiasm_Lu1_primary.all.maker.transcripts.renamed.filtered.longest2.fasta"
-echo ""
-echo "Extraction complete!"
 
 # Clean up intermediate files
 rm -f protein_longest_ids.txt transcript_longest_ids.txt

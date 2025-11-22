@@ -7,7 +7,6 @@
 #SBATCH --output=/data/users/vmuller/organization_annotation_course/log/setup_genespace_%J.out
 #SBATCH --error=/data/users/vmuller/organization_annotation_course/log/setup_genespace_%J.err
 
-set -e
 
 # Paths
 WORK_DIR="/data/users/vmuller/organization_annotation_course/results"
@@ -17,6 +16,7 @@ COURSE_DATA="/data/courses/assembly-annotation-course/CDS_annotation/data"
 LIAN_GFF="${COURSE_DATA}/Lian_et_al/gene_gff/selected"
 LIAN_PROTEIN="${COURSE_DATA}/Lian_et_al/protein/selected"
 
+#list accession used for the comparaison
 MY_ACCESSION="Lu_1"
 OTHER_ACCESSIONS=("Altai_5" "Are_6" "Etna_2")
 

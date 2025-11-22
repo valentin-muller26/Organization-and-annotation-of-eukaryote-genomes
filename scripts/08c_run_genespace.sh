@@ -16,16 +16,9 @@ GENESPACE_WD="${WORKDIR}/results/genespace"
 CONTAINER="${COURSEDIR}/containers/genespace_latest.sif"
 RSCRIPT="${WORKDIR}/scripts/08b_genespace.R"
 
-# Run GENESPACE in container
-echo "Starting GENESPACE analysis..."
-echo ""
-
+# Run GENESPACE
 apptainer exec \
     --bind /data \
     --bind ${SCRATCH}:/temp \
     ${CONTAINER} Rscript ${RSCRIPT} ${GENESPACE_WD}
 
-echo ""
-echo "=========================================="
-echo "Job completed successfully!"
-echo "=========================================="

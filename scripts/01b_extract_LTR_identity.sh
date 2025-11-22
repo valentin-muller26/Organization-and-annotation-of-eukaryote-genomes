@@ -7,23 +7,22 @@
 #SBATCH --error=/data/users/vmuller/organization_annotation_course/log/extract_identity_%J.err
 #SBATCH --partition=pibu_el8
 
-# ============================================================================
-# STEP 1: EXTRACT LTR PERCENT IDENTITY FROM GFF3
-# ============================================================================
 
-# Directories
+
+#Setting the constant for the directories and required files
 WORKDIR="/data/users/${USER}/organization_annotation_course"
 EDTA_DIR="$WORKDIR/results/EDTA_annotation"
 OUTDIR="$WORKDIR/results/LTR_analysis"
 
 # GFF3 Input file
 GFF3_FILE="$EDTA_DIR/HiFiasm_Lu1_primary.fa.mod.EDTA.raw/LTR/HiFiasm_Lu1_primary.fa.mod.LTR.intact.raw.gff3"
+#Create the directory for the error and output file if not present
+mkdir -p "$LOGDIR"
 
 # Create output directory
 mkdir -p "$OUTDIR"
 
-# Extract LTR identity from GFF3
-# The GFF3 contains attributes like "ltr_identity=98.5"
+# Extract LTR identity from GFF3 with the ltr_identity in the attribute column"
 grep -v "^#" "$GFF3_FILE" | \
     awk -F'\t' '
     /LTR_retrotransposon/ {
